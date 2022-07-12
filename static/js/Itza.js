@@ -1,6 +1,6 @@
 class Itza {
     constructor() {
-        this.buttonIcon = {
+        this.iconSVG = {
             code:'M5.854 4.854a.5.5 0 1 0-.708-.708l-3.5 3.5a.5.5 0 0 0 0 .7' +
             '08l3.5 3.5a.5.5 0 0 0 .708-.708L2.707 8l3.147-3.146zm4.292 0a.5' +
             '.5 0 0 1 .708-.708l3.5 3.5a.5.5 0 0 1 0 .708l-3.5 3.5a.5.5 0 0 ' +
@@ -26,5 +26,24 @@ class Itza {
             '3s3.917-1.518 3.917-3.623V3.136h-1.23v6.323c0 1.49-.978 2.57-2.' +
             '687 2.57-1.709 0-2.687-1.08-2.687-2.57V3.136zM12.5 15h-9v-1h9v1z'
         }
+
+        this.iconDim = 22
+    }
+
+    createIconSVG = (type) => {
+        let icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+
+        icon.setAttribute('width', `${this.iconDim}`)
+        icon.setAttribute('height', `${this.iconDim}`)
+
+        icon.setAttributeNS(
+            'http://www.w3.org/2000/xmlns/', 
+            'xmlns:xlink', 
+            'http://www.w3.org/1999/xlink'
+        )
+
+        icon.setAttribute('d', this.iconSVG[type])
+    
+        return icon
     }
 }
