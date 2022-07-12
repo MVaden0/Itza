@@ -36,15 +36,14 @@ class Itza {
             'svg'
         )
 
+        icon.setAttribute('width', `${this.iconDim}`)
+        icon.setAttribute('height', `${this.iconDim}`)
+
         icon.setAttributeNS(
             'http://www.w3.org/2000/xmlns/', 
             'xmlns:xlink', 
             'http://www.w3.org/1999/xlink'
         )
-
-        icon.setAttribute('width', `${this.iconDim}`)
-        icon.setAttribute('height', `${this.iconDim}`)
-        icon.setAttribute('viewBox', '0 0 16 16')
 
         let path = document.createElementNS(
             'http://www.w3.org/2000/svg', 
