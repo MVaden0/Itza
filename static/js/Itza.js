@@ -29,7 +29,8 @@ class Itza {
 
         this.prefix = 'itza__editor__'
 
-        this.container = 'itza__editor' || options.container
+        this.container = document.querySelector('#itza__editor') || 
+            options.container
 
         this.iconDim = 22 || options.iconDim
         this.controls = [
@@ -44,10 +45,32 @@ class Itza {
         this.buttonClass = 'content__menu__button' || options.buttonClass
         this.contentClass = 'content' || options.contentClass
         this.surfaceClass = 'content__surface' || options.surfaceClass
+
+        // initialize the html
+        this.buildHTML()
     }
 
     buildHTML = () => {
+        // add class to container
+        this.container.setAttribute('class', this.wrapperClass)
 
+        // menu
+        let menu = document.createElement('div')
+        menu.setAttribute('class', this.menuClass)
+
+        // content (surface wrapper) and surface
+        let content = document.createElement('div')
+        content.setAttribute('class', this.contentClass)
+
+        let surface = document.createElement('div')
+        surface.setAttribute('class', this.surfaceClass)
+        surface.setAttribute('contenteditable', true)
+
+        content.appendChild(surface)
+
+        // add menu and surface to container
+        this.container.appendChild(menu)
+        this.container.appendChild(content)
     }
 
     createButton = (type) => {
