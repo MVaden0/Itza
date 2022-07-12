@@ -1,0 +1,27 @@
+html, 
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.content {
+  width: 650px;
+  height: 350px;
+  border-bottom-left-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.content__surface {
+  width: calc(100% - 3rem);
+  height: calc(100% - 3rem);
+  background-color: aqua;
+  margin: 1.5rem;
+}
+
+/* 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 */
