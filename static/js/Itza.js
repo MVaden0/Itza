@@ -37,6 +37,7 @@ class Itza {
             'code',
             'bold',
             'italic',
+            'underline',
             'strikethrough'
         ] || options.controls
 
@@ -58,6 +59,11 @@ class Itza {
         let menu = document.createElement('div')
         menu.setAttribute('class', this.menuClass)
 
+        // add controls to menu
+        this.controls.forEach((type) => {
+            menu.appendChild(this.createButton(type))
+        })
+
         // content (surface wrapper) and surface
         let content = document.createElement('div')
         content.setAttribute('class', this.contentClass)
@@ -76,7 +82,7 @@ class Itza {
     createButton = (type) => {
         // button element
         let button = document.createElement('button')
-        button.setAttribute('id', `${prefix}__${type}-button`)
+        button.setAttribute('id', `${this.prefix}__${type}-button`)
         button.setAttribute('class', this.buttonClass)
 
         // button icon
