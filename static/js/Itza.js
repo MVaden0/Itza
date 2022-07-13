@@ -91,10 +91,8 @@ class Itza {
         this.contentClass = 'content' || options.contentClass
         this.surfaceClass = 'content__surface' || options.surfaceClass
 
-        this.surface = document.querySelector(`.${this.surfaceClass}`)
-
-        // initialize the html
         this.buildHTML()
+        this.attachEvents()
     }
 
     codeEvent = () => {
@@ -118,15 +116,21 @@ class Itza {
     }
 
     leftAlignEvent = () => {
-        this.surface.getElementsByClassName.textAlign = 'left'
+        let surface = document.querySelector(`.${this.surfaceClass}`)
+        
+        surface.style.textAlign = 'left'
     }
 
     centerAlignEvent = () => {
-        this.surface.getElementsByClassName.textAlign = 'center'
+        let surface = document.querySelector(`.${this.surfaceClass}`)
+        
+        surface.style.textAlign = 'center'
     }
 
     rightAlignEvent = () => {
-        this.surface.getElementsByClassName.textAlign = 'right'
+        let surface = document.querySelector(`.${this.surfaceClass}`)
+        
+        surface.style.textAlign = 'right'
     }
 
     linkEvent = () => {
@@ -143,7 +147,7 @@ class Itza {
             let button = document.querySelector(`#${this.prefix}${type}-button`)
 
             // attach respective event listener
-            button.addEventListener(this.controlEvents[type])
+            button.addEventListener('click', this.controlEvents[type])
         })
     }
 

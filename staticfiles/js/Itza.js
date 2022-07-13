@@ -1,5 +1,5 @@
 class Itza {
-    constructor() {
+    constructor(options) {
         this.iconSVG = {
             code:'M5.854 4.854a.5.5 0 1 0-.708-.708l-3.5 3.5a.5.5 0 0 0 0 .7' +
             '08l3.5 3.5a.5.5 0 0 0 .708-.708L2.707 8l3.147-3.146zm4.292 0a.5' +
@@ -24,34 +24,191 @@ class Itza {
             '68.437.675.994.675 1.697 0 1.826-1.436 2.967-3.644 2.967z',
             underline:'M5.313 3.136h-1.23V9.54c0 2.105 1.47 3.623 3.917 3.62' +
             '3s3.917-1.518 3.917-3.623V3.136h-1.23v6.323c0 1.49-.978 2.57-2.' +
-            '687 2.57-1.709 0-2.687-1.08-2.687-2.57V3.136zM12.5 15h-9v-1h9v1z'
+            '687 2.57-1.709 0-2.687-1.08-2.687-2.57V3.136zM12.5 15h-9v-1h9v1z',
+            leftalign:'M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0' +
+            ' 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1' +
+            '-.5-.5zm0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-' +
+            '.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z',
+            centeralign:'M4 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0' +
+            ' 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 ' +
+            '0 1-.5-.5zm2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-' +
+            '.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.' +
+            '5-.5z',
+            rightalign:'M6 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 ' +
+            '0 1-.5-.5zm-4-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0' +
+            ' 1-.5-.5zm4-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.' +
+            '5-.5zm-4-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5' +
+            '-.5z',
+            link:'M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829' +
+            'A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0' +
+            ' 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.' +
+            '018 0 0 1-.128-1.287 M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776' +
+            'a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.' +
+            '112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.58' +
+            '6 4.672z',
+            image:'M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0 M2.002 1a2' +
+            ' 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h' +
+            '-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3' +
+            '.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1' +
+            'h12z'
         }
 
-        this.iconDim = 22
+        this.prefix = 'itza__editor__'
+
+        this.container = document.querySelector('#itza__editor') || 
+            options.container
+
+        this.iconDim = 22 || options.iconDim
+        this.controls = [
+            'code',
+            'bold',
+            'italic',
+            'underline',
+            'strikethrough',
+            'leftalign',
+            'centeralign',
+            'rightalign',
+            'link',
+            'image'
+        ] || options.controls
+
+        this.controlEvents = {
+            code: this.codeEvent,
+            bold: this.boldEvent,
+            italic: this.italicEvent,
+            underline: this.underlineEvent,
+            strikethrough: this.strikethroughEvent,
+            leftalign: this.leftAlignEvent,
+            centeralign: this.centerAlignEvent,
+            rightalign: this.rightAlignEvent,
+            link: this.linkEvent,
+            image: this.imageEvent
+        }
+
+        this.wrapperClass = 'content__wrapper' || options.wrapperClass
+        this.menuClass = 'content__menu' || options.menuClass
+        this.buttonClass = 'content__menu__button' || options.buttonClass
+        this.contentClass = 'content' || options.contentClass
+        this.surfaceClass = 'content__surface' || options.surfaceClass
+
+        this.surface = document.querySelector(`.${this.surfaceClass}`)
+
+        this.buildHTML()
+        this.attachEvents()
+    }
+
+    codeEvent = () => {
+
+    }
+
+    boldEvent = () => {
+
+    }
+
+    italicEvent = () => {
+
+    }
+
+    underlineEvent = () => {
+
+    }
+
+    strikethroughEvent = () => {
+
+    }
+
+    leftAlignEvent = () => {
+        this.surface.getElementsByClassName.textAlign = 'left'
+    }
+
+    centerAlignEvent = () => {
+        this.surface.getElementsByClassName.textAlign = 'center'
+    }
+
+    rightAlignEvent = () => {
+        this.surface.getElementsByClassName.textAlign = 'right'
+    }
+
+    linkEvent = () => {
+
+    }
+
+    imageEvent = () => {
+
+    }
+
+    attachEvents = () => {
+        this.controls.forEach((type) =>  {
+            // get specific button element
+            let button = document.querySelector(`#${this.prefix}${type}-button`)
+
+            // attach respective event listener
+            button.addEventListener(this.controlEvents[type])
+        })
+    }
+
+    buildHTML = () => {
+        // add class to container
+        this.container.setAttribute('class', this.wrapperClass)
+
+        // menu
+        let menu = document.createElement('div')
+        menu.setAttribute('class', this.menuClass)
+
+        // add controls to menu
+        this.controls.forEach((type) => {
+            menu.appendChild(this.createButton(type))
+        })
+
+        // content (surface wrapper) and surface
+        let content = document.createElement('div')
+        content.setAttribute('class', this.contentClass)
+
+        let surface = document.createElement('div')
+        surface.setAttribute('class', this.surfaceClass)
+        surface.setAttribute('contenteditable', true)
+
+        content.appendChild(surface)
+
+        // add menu and surface to container
+        this.container.appendChild(menu)
+        this.container.appendChild(content)
+    }
+
+    createButton = (type) => {
+        // button element
+        let button = document.createElement('button')
+        button.setAttribute('id', `${this.prefix}${type}-button`)
+        button.setAttribute('class', this.buttonClass)
+
+        // button icon
+        let icon = this.createIconSVG(type)
+        button.appendChild(icon)
+
+        return button
     }
 
     createIconSVG = (type) => {
+        // icon svg element
         let icon = document.createElementNS(
             'http://www.w3.org/2000/svg', 
             'svg'
         )
-
-        icon.setAttribute('width', `${this.iconDim}`)
-        icon.setAttribute('height', `${this.iconDim}`)
-
         icon.setAttributeNS(
             'http://www.w3.org/2000/xmlns/', 
             'xmlns:xlink', 
             'http://www.w3.org/1999/xlink'
         )
+        icon.setAttribute('width', `${this.iconDim}`)
+        icon.setAttribute('height', `${this.iconDim}`)
+        icon.setAttribute('viewBox', '0 0 16 16')
 
+        // icon path element
         let path = document.createElementNS(
             'http://www.w3.org/2000/svg', 
             'path'
         )
-
         path.setAttribute('d', this.iconSVG[type])
-
         icon.appendChild(path)
     
         return icon
