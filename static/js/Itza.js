@@ -72,14 +72,79 @@ class Itza {
             'image'
         ] || options.controls
 
+        this.controlEvents = {
+            code: this.codeEvent,
+            bold: this.boldEvent,
+            italic: this.italicEvent,
+            underline: this.underlineEvent,
+            strikethrough: this.strikethroughEvent,
+            leftalign: this.leftAlignEvent,
+            centeralign: this.centerAlignEvent,
+            rightalign: this.rightAlignEvent,
+            link: this.linkEvent,
+            image: this.imageEvent
+        }
+
         this.wrapperClass = 'content__wrapper' || options.wrapperClass
         this.menuClass = 'content__menu' || options.menuClass
         this.buttonClass = 'content__menu__button' || options.buttonClass
         this.contentClass = 'content' || options.contentClass
         this.surfaceClass = 'content__surface' || options.surfaceClass
 
+        this.surface = document.querySelector(`.${this.surfaceClass}`)
+
         // initialize the html
         this.buildHTML()
+    }
+
+    codeEvent = () => {
+
+    }
+
+    boldEvent = () => {
+
+    }
+
+    italicEvent = () => {
+
+    }
+
+    underlineEvent = () => {
+
+    }
+
+    strikethroughEvent = () => {
+
+    }
+
+    leftAlignEvent = () => {
+        this.surface.getElementsByClassName.textAlign = 'left'
+    }
+
+    centerAlignEvent = () => {
+        this.surface.getElementsByClassName.textAlign = 'center'
+    }
+
+    rightAlignEvent = () => {
+        this.surface.getElementsByClassName.textAlign = 'right'
+    }
+
+    linkEvent = () => {
+
+    }
+
+    imageEvent = () => {
+
+    }
+
+    attachEvents = () => {
+        this.controls.forEach((type) =>  {
+            // get specific button element
+            let button = document.querySelector(`#${this.prefix}${type}-button`)
+
+            // attach respective event listener
+            button.addEventListener(this.controlEvents[type])
+        })
     }
 
     buildHTML = () => {
@@ -113,7 +178,7 @@ class Itza {
     createButton = (type) => {
         // button element
         let button = document.createElement('button')
-        button.setAttribute('id', `${this.prefix}__${type}-button`)
+        button.setAttribute('id', `${this.prefix}${type}-button`)
         button.setAttribute('class', this.buttonClass)
 
         // button icon
