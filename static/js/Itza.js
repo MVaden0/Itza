@@ -1,3 +1,23 @@
+const waitForElement = (selector) => {
+    return new Promise(resolve => {
+        if (document.querySelector(selector)) {
+            return resolve(document.querySelector(selector))
+        }
+
+        const observer = new MutationObserver(mutations => {
+            if (document.querySelector(selector)) {
+                resolve(document.querySelector(selector))
+                observer.disconnect()
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        })
+    })
+}
+
 class Itza {
     constructor(options) {
         this.iconSVG = {
@@ -93,6 +113,25 @@ class Itza {
 
         this.buildHTML()
         this.attachEvents()
+
+        // initialize surface events
+        waitForElement(`.${this.surfaceClass}`).then((element) => {
+            element.addEventListener('keydown', (event) => {
+                this.disableDefaultControls(event)
+            })
+        })
+    }
+
+    disableDefaultControls = (event) => {
+        const disabledControls = ['b', 'i', 'u']
+
+        disabledControls.forEach((disabledControl) => {
+            if (event.ctrlKey && event.key.toLowerCase() === disabledControl)
+            {
+                event.stopPropagation();
+                event.preventDefault();
+            }    
+        })
     }
 
     codeEvent = () => {
