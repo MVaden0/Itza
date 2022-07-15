@@ -190,6 +190,21 @@ class Itza {
         })
     }
 
+    getCursorPosition = () => {
+        const selection = document.getSelection()
+
+        selection.modify("extend", "backward", "paragraphboundary")
+
+        const position = selection.toString().length
+
+        if (selection.anchorNode !== undefined) 
+        {
+          selection.collapseToEnd();
+        }
+      
+        return position
+    }
+
     buildHTML = () => {
         // add class to container
         this.container.setAttribute('class', this.wrapperClass)
