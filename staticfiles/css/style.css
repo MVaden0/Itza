@@ -44,7 +44,24 @@ body {
 .content__surface {
   width: calc(100% - 3rem);
   height: calc(100% - 3rem);
-  margin: 1.5rem
+  margin: 1.5rem;
+  overflow-y: auto;
+}
+
+.content__surface::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 5px;
+}
+
+/* Handle */
+.content__surface::-webkit-scrollbar-thumb {
+  background: #D7D0C8;
+  transition: .2s ease-in-out;
+}
+
+/* Handle on hover */
+.content__surface::-webkit-scrollbar-thumb:hover {
+  background: #b1aaa3;
 }
 
 .content__surface:focus {

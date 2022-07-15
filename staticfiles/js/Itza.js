@@ -1,3 +1,23 @@
+const waitForElement = (selector) => {
+    return new Promise(resolve => {
+        if (document.querySelector(selector)) {
+            return resolve(document.querySelector(selector))
+        }
+
+        const observer = new MutationObserver(mutations => {
+            if (document.querySelector(selector)) {
+                resolve(document.querySelector(selector))
+                observer.disconnect()
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        })
+    })
+}
+
 class Itza {
     constructor(options) {
         this.iconSVG = {
@@ -91,10 +111,27 @@ class Itza {
         this.contentClass = 'content' || options.contentClass
         this.surfaceClass = 'content__surface' || options.surfaceClass
 
-        this.surface = document.querySelector(`.${this.surfaceClass}`)
-
         this.buildHTML()
         this.attachEvents()
+
+        // initialize surface events
+        waitForElement(`.${this.surfaceClass}`).then((element) => {
+            element.addEventListener('keydown', (event) => {
+                this.disableDefaultControls(event)
+            })
+        })
+    }
+
+    disableDefaultControls = (event) => {
+        const disabledControls = ['b', 'i', 'u', ]
+
+        disabledControls.forEach((disabledControl) => {
+            if (event.ctrlKey && event.key.toLowerCase() === disabledControl)
+            {
+                event.stopPropagation();
+                event.preventDefault();
+            }    
+        })
     }
 
     codeEvent = () => {
@@ -118,15 +155,21 @@ class Itza {
     }
 
     leftAlignEvent = () => {
-        this.surface.getElementsByClassName.textAlign = 'left'
+        let surface = document.querySelector(`.${this.surfaceClass}`)
+        
+        surface.style.textAlign = 'left'
     }
 
     centerAlignEvent = () => {
-        this.surface.getElementsByClassName.textAlign = 'center'
+        let surface = document.querySelector(`.${this.surfaceClass}`)
+        
+        surface.style.textAlign = 'center'
     }
 
     rightAlignEvent = () => {
-        this.surface.getElementsByClassName.textAlign = 'right'
+        let surface = document.querySelector(`.${this.surfaceClass}`)
+        
+        surface.style.textAlign = 'right'
     }
 
     linkEvent = () => {
@@ -143,7 +186,7 @@ class Itza {
             let button = document.querySelector(`#${this.prefix}${type}-button`)
 
             // attach respective event listener
-            button.addEventListener(this.controlEvents[type])
+            button.addEventListener('click', this.controlEvents[type])
         })
     }
 
@@ -167,6 +210,14 @@ class Itza {
         let surface = document.createElement('div')
         surface.setAttribute('class', this.surfaceClass)
         surface.setAttribute('contenteditable', true)
+
+        // dummy text
+        let text = ''
+        for (let i = 0; i < 1000; i += 1) {
+            text += 'asdf'
+        }
+
+        surface.innerHTML = text
 
         content.appendChild(surface)
 

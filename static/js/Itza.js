@@ -123,7 +123,7 @@ class Itza {
     }
 
     disableDefaultControls = (event) => {
-        const disabledControls = ['b', 'i', 'u']
+        const disabledControls = ['b', 'i', 'u', ]
 
         disabledControls.forEach((disabledControl) => {
             if (event.ctrlKey && event.key.toLowerCase() === disabledControl)
@@ -210,6 +210,14 @@ class Itza {
         let surface = document.createElement('div')
         surface.setAttribute('class', this.surfaceClass)
         surface.setAttribute('contenteditable', true)
+
+        // dummy text
+        let text = ''
+        for (let i = 0; i < 1000; i += 1) {
+            text += 'asdf'
+        }
+
+        surface.innerHTML = text
 
         content.appendChild(surface)
 
