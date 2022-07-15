@@ -116,10 +116,19 @@ class Itza {
 
         // initialize surface events
         waitForElement(`.${this.surfaceClass}`).then((element) => {
+            element.addEventListener('click', (event) => {
+                this.setSelectionStart()
+            })
+
             element.addEventListener('keydown', (event) => {
+                alert(this.selectionStart)
+                alert(this.getCursorPosition())
                 this.disableDefaultControls(event)
             })
         })
+
+        // start of selection
+        this.selectionStart
     }
 
     disableDefaultControls = (event) => {
@@ -188,6 +197,21 @@ class Itza {
             // attach respective event listener
             button.addEventListener('click', this.controlEvents[type])
         })
+    }
+
+    setSelectionStart = () => {
+        const selection = document.getSelection()
+
+        selection.modify("extend", "backward", "paragraphboundary")
+
+        const position = selection.toString().length
+
+        if (selection.anchorNode !== undefined) 
+        {
+          selection.collapseToEnd()
+        }
+
+        this.selectionStart = position
     }
 
     getCursorPosition = () => {
